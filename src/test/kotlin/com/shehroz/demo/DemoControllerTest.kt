@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.assertj.core.api.Assertions.assertThat
+import org.mockito.Mock
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
@@ -21,7 +22,8 @@ import org.springframework.test.web.reactive.server.expectBody
 class DemoControllerTest {
     @Autowired
     private lateinit var webTestClient: WebTestClient
-
+    @Mock
+    private lateinit var demoService: DemoService
     @Test
     @DisplayName("Should Get All Users")
     fun shouldGetAllUsers() {
