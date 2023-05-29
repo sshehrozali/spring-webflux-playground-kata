@@ -1,6 +1,6 @@
 package com.shehroz.demo
 
-data class DemoResponseDTO(
+data class GetAllUsersDTO(
     val userName: String,
     val phoneNumber: Long
 )
