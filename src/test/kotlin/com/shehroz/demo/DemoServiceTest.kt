@@ -9,9 +9,13 @@ import org.mockito.Mock
 import java.util.*
 
 class DemoServiceTest(
-    @Mock private val demoRepository: DemoRepository,
-    @InjectMocks private val serviceUnderTest: DemoService,
 ) {
+    @Mock
+    private lateinit var demoRepository: DemoRepository
+
+    @InjectMocks
+    private lateinit var serviceUnderTest: DemoService
+
     @Test
     @DisplayName("Should Get All Users Successfully")
     fun shouldGetAllUsersSuccessfully() {

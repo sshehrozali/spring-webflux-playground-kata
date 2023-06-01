@@ -1,39 +1,41 @@
 package com.shehroz.demo
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import io.mockk.impl.annotations.MockK
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-import org.assertj.core.api.Assertions.assertThat
-import org.mockito.Mock
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-
-@WebFluxTest(controllers = [DemoController::class])
-@ExtendWith(SpringExtension::class)
-class DemoControllerTest {
+@WebFluxTest
+class DemoControllerTest(
+    private val demoController: DemoController
+) {
     @Autowired
     private lateinit var webTestClient: WebTestClient
-    @Mock
+
+    @MockK
     private lateinit var demoService: DemoService
+
     @Test
     @DisplayName("Should Get All Users")
     fun shouldGetAllUsers() {
-        // Arrange, Act, Assert
+//        // Arrange
+//        val expected = mutableListOf<GetAllUsersDTO>(
+//            GetAllUsersDTO("shehroz.ali", 3352669779),
+//            GetAllUsersDTO("saad.hashim", 3022194551),
+//        )
+//        every { demoService.getAllUsers() } returns expected
+
+        // Act and Assert
         webTestClient
             .get()
             .uri("/api/v1/users/all")
             .exchange()
             .expectStatus().isOk()
-            .expectBody<String>()
-            .isEqualTo("Hello Kotlin Spring WebFlux")
+            .expectBody<List<GetAllUsersDTO>>()
+//            .isEqualTo(expected)
     }
 }
