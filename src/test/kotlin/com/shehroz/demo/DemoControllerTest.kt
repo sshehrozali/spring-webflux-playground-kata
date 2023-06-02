@@ -1,21 +1,21 @@
 package com.shehroz.demo
 
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito
+import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-@WebFluxTest
-class DemoControllerTest {
-    @Autowired
-    private lateinit var webTestClient: WebTestClient
-    private val demoService = mockk<DemoService>()
-    val demoController = DemoController(demoService)
+@WebFluxTest(DemoController::class)
+class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
+
+    @MockBean
+    lateinit var demoService: DemoService
 
     @Test
     @DisplayName("Should Get All Users")
@@ -25,9 +25,9 @@ class DemoControllerTest {
             GetAllUsersDTO("shehroz.ali", 3352669779),
             GetAllUsersDTO("saad.hashim", 3022194551),
         )
-        every { demoService.getAllUsers() } returns expected
+        `when`(demoService.getAllUsers()).thenReturn(expected)
 
-        // Act and Assert
+        // Act
         webTestClient
             .get()
             .uri("/api/v1/users/all")
@@ -35,5 +35,8 @@ class DemoControllerTest {
             .expectStatus().isOk()
             .expectBody<List<GetAllUsersDTO>>()
             .isEqualTo(expected)
+
+        // Assert
+        verify(demoService, Mockito.times(1)).getAllUsers()
     }
 }
