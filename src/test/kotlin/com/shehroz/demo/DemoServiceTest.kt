@@ -1,6 +1,7 @@
 package com.shehroz.demo
 
 import io.mockk.every
+import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -8,13 +9,10 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import java.util.*
 
-class DemoServiceTest(
-) {
-    @Mock
-    private lateinit var demoRepository: DemoRepository
+class DemoServiceTest {
 
-    @InjectMocks
-    private lateinit var serviceUnderTest: DemoService
+    private val demoRepository: DemoRepository = mockk()
+    private val serviceUnderTest = DemoService(demoRepository)
 
     @Test
     @DisplayName("Should Get All Users Successfully")
