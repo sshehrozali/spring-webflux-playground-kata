@@ -27,7 +27,7 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
         )
         `when`(demoService.getAllUsers()).thenReturn(expected)
 
-        // Act
+        // Act & Assert
         webTestClient
             .get()
             .uri("/api/v1/users/all")
@@ -35,17 +35,26 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .expectStatus().isOk()
             .expectBody<List<UserDTO>>()
             .isEqualTo(expected)
-
-        // Assert
         verify(demoService, Mockito.times(1)).getAllUsers()
     }
 
     @Test
     @DisplayName("Should Get A User By UUID")
-    fun shouldGetAUserByUUID() {
+    fun shouldGetUserByUUID() {
         // Arrange
-        val userId = UUID.randomUUID()
+        val savedUserId = UUID.randomUUID()
         val expected = UserDTO("Shehroz Ali", 3352669779)
-        `when`(demoService.getUserByUUID())
+        `when`(demoService.getUserByUUID(savedUserId)).thenReturn(expected)
+
+        // Act & Assert
+        webTestClient
+            .get()
+            .uri("/api/v1/users/{userId}", savedUserId)
+            .exchange()
+            .expectStatus().isOk()
+            .expectBody<UserDTO>()
+            .isEqualTo(expected)
+        verify(demoService, Mockito.times(1))
+            .getUserByUUID(userId = savedUserId)
     }
 }
