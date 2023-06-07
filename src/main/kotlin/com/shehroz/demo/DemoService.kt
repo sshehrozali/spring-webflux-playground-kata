@@ -1,6 +1,7 @@
 package com.shehroz.demo
 
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class DemoService(
@@ -14,7 +15,16 @@ class DemoService(
             .toList()
     }
 
-    fun getUserByUUID(): UserDTO {
-        demoRepository.findB
+    fun getUserByUUID(userId: UUID): UserDTO {
+        val user = demoRepository.findByUserId(userId)
+
+        if (user.isEmpty) {
+            throw IllegalAccessError("User not found by UUID")
+        }
+
+        return UserDTO(
+            user.get().userName,
+            user.get().phoneNumber
+        )
     }
 }
