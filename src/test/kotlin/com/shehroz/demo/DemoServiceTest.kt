@@ -16,8 +16,8 @@ class DemoServiceTest {
     @DisplayName("Should Get All Users Successfully")
     fun shouldGetAllUsersSuccessfully() {
         // Arrange
-        val savedUsers = mutableListOf<DemoEntity>(
-            DemoEntity(UUID.randomUUID(), "shehroz", 3352669779)
+        val savedUsers = mutableListOf<User>(
+            User(UUID.randomUUID(), "shehroz", 3352669779)
         )
         every { demoRepository.findAll() } returns savedUsers
 

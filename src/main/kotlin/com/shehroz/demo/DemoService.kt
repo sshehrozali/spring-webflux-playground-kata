@@ -13,4 +13,8 @@ class DemoService(
             .map { it -> UserDTO(it.userName, it.phoneNumber) }
             .toList()
     }
+
+    fun getUserByUUID(): UserDTO {
+        demoRepository.findB
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
+import java.util.UUID
 
 @WebFluxTest(DemoController::class)
 class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
@@ -42,6 +43,9 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
     @Test
     @DisplayName("Should Get A User By UUID")
     fun shouldGetAUserByUUID() {
-
+        // Arrange
+        val userId = UUID.randomUUID()
+        val expected = UserDTO("Shehroz Ali", 3352669779)
+        `when`(demoService.getUserByUUID())
     }
 }

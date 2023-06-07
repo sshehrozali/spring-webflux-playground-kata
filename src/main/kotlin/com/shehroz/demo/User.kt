@@ -8,7 +8,7 @@ import java.util.UUID
 
 @Entity
 @Table(name = "users")
-class DemoEntity(
+class User(
     @Id
     var id: UUID = UUID.randomUUID(),
 
