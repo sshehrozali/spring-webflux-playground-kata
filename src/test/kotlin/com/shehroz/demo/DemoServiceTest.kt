@@ -5,8 +5,6 @@ import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.InjectMocks
-import org.mockito.Mock
 import java.util.*
 
 class DemoServiceTest {
@@ -23,8 +21,8 @@ class DemoServiceTest {
         )
         every { demoRepository.findAll() } returns savedUsers
 
-        val expected = mutableListOf<GetAllUsersDTO>(
-            GetAllUsersDTO("shehroz", 3352669779)
+        val expected = mutableListOf<UserDTO>(
+            UserDTO("shehroz", 3352669779)
         )
 
         // Act

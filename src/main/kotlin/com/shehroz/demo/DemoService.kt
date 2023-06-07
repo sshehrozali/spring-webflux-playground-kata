@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service
 class DemoService(
     private val demoRepository: DemoRepository
 ) {
-    fun getAllUsers(): List<GetAllUsersDTO> {
+    fun getAllUsers(): List<UserDTO> {
         return demoRepository
             .findAll()
             .stream()
-            .map { it -> GetAllUsersDTO(it.userName, it.phoneNumber) }
+            .map { it -> UserDTO(it.userName, it.phoneNumber) }
             .toList()
     }
 }

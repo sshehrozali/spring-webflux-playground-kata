@@ -1,6 +1,5 @@
 package com.shehroz.demo
 
-import io.netty.handler.codec.http.HttpResponseStatus.OK
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,7 +12,7 @@ class DemoController(
     private val demoService: DemoService
 ) {
     @GetMapping("/users/all")
-    fun getAllUsers(): Mono<ResponseEntity<List<GetAllUsersDTO>>> {
+    fun getAllUsers(): Mono<ResponseEntity<List<UserDTO>>> {
         val allUsers = demoService.getAllUsers()
         return Mono.just(
             ResponseEntity
