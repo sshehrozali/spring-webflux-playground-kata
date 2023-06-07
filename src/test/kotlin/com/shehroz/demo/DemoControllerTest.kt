@@ -30,7 +30,7 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
         // Act & Assert
         webTestClient
             .get()
-            .uri("/api/v1/users/all")
+            .uri("/api/v1/users")
             .exchange()
             .expectStatus().isOk()
             .expectBody<List<UserDTO>>()

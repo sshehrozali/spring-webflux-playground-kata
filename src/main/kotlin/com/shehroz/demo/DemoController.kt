@@ -13,7 +13,7 @@ import java.util.UUID
 class DemoController(
     private val demoService: DemoService
 ) {
-    @GetMapping("/users/all")
+    @GetMapping("/users")
     fun getAllUsers(): Mono<ResponseEntity<List<UserDTO>>> {
         val allUsers = demoService.getAllUsers()
         return Mono.just(
