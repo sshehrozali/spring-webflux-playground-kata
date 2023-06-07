@@ -12,6 +12,9 @@ class DemoEntity(
     @Id
     var id: UUID = UUID.randomUUID(),
 
+    @Column(name = "user_id", nullable = false)
+    var userId: UUID,
+
     @Column(name = "user_name", nullable = false)
     var userName: String,
 
