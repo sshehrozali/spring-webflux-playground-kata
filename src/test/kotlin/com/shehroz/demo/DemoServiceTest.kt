@@ -17,12 +17,20 @@ class DemoServiceTest {
     fun shouldGetAllUsersSuccessfully() {
         // Arrange
         val savedUsers = mutableListOf<User>(
-            User(UUID.randomUUID(), "shehroz", 3352669779)
+            User(
+                UUID.randomUUID(),
+                UUID.randomUUID(),
+                "shehroz",
+                3352669779
+            )
         )
         every { demoRepository.findAll() } returns savedUsers
 
         val expected = mutableListOf<UserDTO>(
-            UserDTO("shehroz", 3352669779)
+            UserDTO(
+                "shehroz",
+                3352669779
+            )
         )
 
         // Act
