@@ -7,10 +7,10 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.util.*
 
-class DemoServiceTest {
+class UserServiceTest {
 
     private val demoRepository: DemoRepository = mockk()
-    private val serviceUnderTest = DemoService(demoRepository)
+    private val serviceUnderTest = UserService(demoRepository)
 
     @Test
     @DisplayName("Should Get All Users Successfully")

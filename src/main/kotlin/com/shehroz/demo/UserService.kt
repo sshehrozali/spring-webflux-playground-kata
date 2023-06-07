@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service
 import java.util.UUID
 
 @Service
-class DemoService(
+class UserService(
     private val demoRepository: DemoRepository
 ) {
     fun getAllUsers(): List<UserDTO> {

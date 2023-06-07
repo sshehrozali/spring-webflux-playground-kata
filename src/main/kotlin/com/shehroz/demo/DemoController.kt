@@ -11,11 +11,11 @@ import java.util.UUID
 @RestController
 @RequestMapping("api/v1")
 class DemoController(
-    private val demoService: DemoService
+    private val userService: UserService
 ) {
     @GetMapping("/users")
     fun getAllUsers(): Mono<ResponseEntity<List<UserDTO>>> {
-        val allUsers = demoService.getAllUsers()
+        val allUsers = userService.getAllUsers()
         return Mono.just(
             ResponseEntity
                 .ok()
@@ -25,7 +25,7 @@ class DemoController(
 
     @GetMapping("/users/{userId}")
     fun getUserByUUID(@PathVariable userId: UUID): Mono<ResponseEntity<UserDTO>> {
-        val user = demoService.getUserByUUID(userId)
+        val user = userService.getUserByUUID(userId)
         return Mono.just(
             ResponseEntity
                 .ok()

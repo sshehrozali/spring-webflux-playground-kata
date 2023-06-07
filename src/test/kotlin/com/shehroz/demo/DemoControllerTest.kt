@@ -15,7 +15,7 @@ import java.util.UUID
 class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
 
     @MockBean
-    lateinit var demoService: DemoService
+    lateinit var userService: UserService
 
     @Test
     @DisplayName("Should Get All Users")
@@ -25,7 +25,7 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
             UserDTO("shehroz.ali", 3352669779),
             UserDTO("saad.hashim", 3022194551),
         )
-        `when`(demoService.getAllUsers()).thenReturn(expected)
+        `when`(userService.getAllUsers()).thenReturn(expected)
 
         // Act & Assert
         webTestClient
@@ -35,7 +35,7 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .expectStatus().isOk()
             .expectBody<List<UserDTO>>()
             .isEqualTo(expected)
-        verify(demoService, Mockito.times(1)).getAllUsers()
+        verify(userService, Mockito.times(1)).getAllUsers()
     }
 
     @Test
@@ -44,7 +44,7 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
         // Arrange
         val savedUserId = UUID.randomUUID()
         val expected = UserDTO("Shehroz Ali", 3352669779)
-        `when`(demoService.getUserByUUID(savedUserId)).thenReturn(expected)
+        `when`(userService.getUserByUUID(savedUserId)).thenReturn(expected)
 
         // Act & Assert
         webTestClient
@@ -54,7 +54,7 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .expectStatus().isOk()
             .expectBody<UserDTO>()
             .isEqualTo(expected)
-        verify(demoService, Mockito.times(1))
+        verify(userService, Mockito.times(1))
             .getUserByUUID(userId = savedUserId)
     }
 }
