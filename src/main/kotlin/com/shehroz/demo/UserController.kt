@@ -10,7 +10,7 @@ import java.util.UUID
 
 @RestController
 @RequestMapping("api/v1")
-class DemoController(
+class UserController(
     private val userService: UserService
 ) {
     @GetMapping("/users")

@@ -11,8 +11,8 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 import java.util.UUID
 
-@WebFluxTest(DemoController::class)
-class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
+@WebFluxTest(UserController::class)
+class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
 
     @MockBean
     lateinit var userService: UserService
