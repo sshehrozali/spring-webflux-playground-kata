@@ -1,6 +1,5 @@
 package com.shehroz.demo
 
-import io.mockk.verify
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -21,9 +20,9 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
     @DisplayName("Should Get All Users")
     fun shouldGetAllUsers() {
         // Arrange
-        val expected = mutableListOf<GetAllUsersDTO>(
-            GetAllUsersDTO("shehroz.ali", 3352669779),
-            GetAllUsersDTO("saad.hashim", 3022194551),
+        val expected = mutableListOf<UserDTO>(
+            UserDTO("shehroz.ali", 3352669779),
+            UserDTO("saad.hashim", 3022194551),
         )
         `when`(demoService.getAllUsers()).thenReturn(expected)
 
@@ -33,10 +32,16 @@ class DemoControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .uri("/api/v1/users/all")
             .exchange()
             .expectStatus().isOk()
-            .expectBody<List<GetAllUsersDTO>>()
+            .expectBody<List<UserDTO>>()
             .isEqualTo(expected)
 
         // Assert
         verify(demoService, Mockito.times(1)).getAllUsers()
+    }
+
+    @Test
+    @DisplayName("Should Get A User By UUID")
+    fun shouldGetAUserByUUID() {
+
     }
 }
