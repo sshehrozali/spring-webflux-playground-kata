@@ -5,10 +5,10 @@ import java.util.UUID
 
 @Service
 class UserService(
-    private val demoRepository: DemoRepository
+    private val userRepository: UserRepository
 ) {
     fun getAllUsers(): List<UserDTO> {
-        return demoRepository
+        return userRepository
             .findAll()
             .stream()
             .map { it -> UserDTO(it.userName, it.phoneNumber) }
@@ -16,7 +16,7 @@ class UserService(
     }
 
     fun getUserByUUID(userId: UUID): UserDTO {
-        val user = demoRepository.findByUserId(userId)
+        val user = userRepository.findByUserId(userId)
 
         if (user.isEmpty) {
             throw IllegalAccessError("User not found by UUID")

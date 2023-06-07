@@ -6,6 +6,6 @@ import java.util.Optional
 import java.util.UUID
 
 @Repository
-interface DemoRepository : JpaRepository<User, UUID> {
+interface UserRepository : JpaRepository<User, UUID> {
     fun findByUserId(userId: UUID): Optional<User>
 }

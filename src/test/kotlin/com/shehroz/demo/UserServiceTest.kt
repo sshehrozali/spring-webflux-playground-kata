@@ -9,8 +9,8 @@ import java.util.*
 
 class UserServiceTest {
 
-    private val demoRepository: DemoRepository = mockk()
-    private val serviceUnderTest = UserService(demoRepository)
+    private val userRepository: UserRepository = mockk()
+    private val serviceUnderTest = UserService(userRepository)
 
     @Test
     @DisplayName("Should Get All Users Successfully")
@@ -24,7 +24,7 @@ class UserServiceTest {
                 3352669779
             )
         )
-        every { demoRepository.findAll() } returns savedUsers
+        every { userRepository.findAll() } returns savedUsers
 
         val expected = mutableListOf<UserDTO>(
             UserDTO(
