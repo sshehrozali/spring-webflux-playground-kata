@@ -6,7 +6,9 @@ import org.assertj.core.api.Assertions.anyOf
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
+import org.mockito.Mockito.any
 import org.mockito.Mockito.`when`
 import java.util.*
 
@@ -66,5 +68,16 @@ class UserServiceTest {
 
         // Assert
         assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    @DisplayName("Should Throw Exception If No User Found By UUID")
+    fun shouldThrowExceptionIfNoUserFoundByUUID() {
+        // Arrange
+        val savedUserId = UUID.randomUUID()
+        every { userRepository.findByUserId(savedUserId) } returns Optional.empty()
+
+        // Act & Assert
+        assertThrows<IllegalAccessError> { serviceUnderTest.getUserByUUID(savedUserId) }
     }
 }
