@@ -1,7 +1,9 @@
 package com.shehroz.demo
 
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Mono
 import java.lang.IllegalArgumentException
+import java.util.Optional
 import java.util.UUID
 
 @Service
@@ -16,7 +18,7 @@ class UserService(
             .toList()
     }
 
-    fun getUserByUUID(userId: UUID): UserDTO {
+    fun getUserByUUID(userId: UUID): Mono<UserDTO> {
         if (userId.equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
             throw IllegalArgumentException("Invalid UUID passed")
         }
@@ -27,9 +29,11 @@ class UserService(
             throw IllegalAccessError("User not found by UUID")
         }
 
-        return UserDTO(
-            user.get().userName,
-            user.get().phoneNumber
+        return Mono.just(
+            UserDTO(
+                user.get().userName,
+                user.get().phoneNumber
+            )
         )
     }
 }
