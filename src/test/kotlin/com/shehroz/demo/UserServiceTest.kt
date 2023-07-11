@@ -80,4 +80,13 @@ class UserServiceTest {
         // Act & Assert
         assertThrows<IllegalAccessError> { serviceUnderTest.getUserByUUID(savedUserId) }
     }
+
+    @Test
+    @DisplayName("Should Throw Exception If UUID Passed Is Invalid")
+    fun shouldThrowExceptionIfUUIDPassedIsInvalid() {
+        // Arrange, Act & Assert
+        assertThrows<IllegalArgumentException> {
+            serviceUnderTest.getUserByUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+        }
+    }
 }

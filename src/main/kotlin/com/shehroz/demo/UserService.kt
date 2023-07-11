@@ -1,6 +1,7 @@
 package com.shehroz.demo
 
 import org.springframework.stereotype.Service
+import java.lang.IllegalArgumentException
 import java.util.UUID
 
 @Service
@@ -16,6 +17,10 @@ class UserService(
     }
 
     fun getUserByUUID(userId: UUID): UserDTO {
+        if (userId.equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
+            throw IllegalArgumentException("Invalid UUID passed")
+        }
+
         val user = userRepository.findByUserId(userId)
 
         if (user.isEmpty) {
