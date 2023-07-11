@@ -10,6 +10,8 @@ import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
 import org.mockito.Mockito.any
 import org.mockito.Mockito.`when`
+import reactor.core.publisher.Mono
+import reactor.test.StepVerifier
 import java.util.*
 
 class UserServiceTest {
@@ -57,17 +59,15 @@ class UserServiceTest {
             3352669779
         )
         every { userRepository.findByUserId(any()) } returns Optional.of(savedUser)
-
-        val expected = UserDTO(
-            "Shehroz",
-            3352669779
-        )
+        val expected = UserDTO("Shehroz", 3352669779)
 
         // Act
         val actual = serviceUnderTest.getUserByUUID(savedUserId)
 
         // Assert
-        assertThat(actual).isEqualTo(expected)
+        StepVerifier.create(actual)
+            .consumeNextWith { assertThat(it).isEqualTo(expected) }
+            .verifyComplete()
     }
 
     @Test
