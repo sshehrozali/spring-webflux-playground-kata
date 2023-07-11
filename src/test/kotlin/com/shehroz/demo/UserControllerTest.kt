@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
+import reactor.core.publisher.Mono
 import java.util.UUID
 
 @WebFluxTest(UserController::class)
@@ -43,7 +44,12 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
     fun shouldGetUserByUUID() {
         // Arrange
         val savedUserId = UUID.randomUUID()
-        val expected = UserDTO("Shehroz Ali", 3352669779)
+        val expected = Mono.just(
+            UserDTO(
+                "Shehroz",
+                3352669779
+            )
+        )
         `when`(userService.getUserByUUID(savedUserId)).thenReturn(expected)
 
         // Act & Assert
@@ -52,7 +58,7 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .uri("/api/v1/users/{userId}", savedUserId)
             .exchange()
             .expectStatus().isOk()
-            .expectBody<UserDTO>()
+            .expectBody<Mono<UserDTO>>()
             .isEqualTo(expected)
         verify(userService, Mockito.times(1))
             .getUserByUUID(userId = savedUserId)

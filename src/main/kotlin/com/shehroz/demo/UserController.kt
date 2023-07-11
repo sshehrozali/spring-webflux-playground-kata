@@ -25,11 +25,9 @@ class UserController(
 
     @GetMapping("/users/{userId}")
     fun getUserByUUID(@PathVariable userId: UUID): Mono<ResponseEntity<UserDTO>> {
-        val user = userService.getUserByUUID(userId)
-        return Mono.just(
-            ResponseEntity
-                .ok()
-                .body(user)
-        )
+        return Mono
+            .just(userId)
+            .flatMap { userService.getUserByUUID(userId) }
+            .map { ResponseEntity.ok().body(it) }
     }
 }
