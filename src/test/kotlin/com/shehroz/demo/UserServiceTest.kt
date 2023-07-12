@@ -70,8 +70,10 @@ class UserServiceTest {
         val savedUserId = UUID.randomUUID()
         every { userRepository.findByUserId(savedUserId) } returns Optional.empty()
 
-        StepVerifier.create(serviceUnderTest.getUserByUUID(savedUserId))
-            .consumeErrorWith { RuntimeException::class.java }
+        val result = serviceUnderTest.getUserByUUID(savedUserId)
+        StepVerifier.create(result)
+            .expectError<RuntimeException>()
+            .verify()
     }
 
     @Test
