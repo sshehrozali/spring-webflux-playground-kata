@@ -48,8 +48,8 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Should Get User Successfully by UUID")
-    fun shouldGetUserSuccessfullyByUUID() {
+    @DisplayName("Should Get A User Successfully by UUID")
+    fun shouldGetAUserSuccessfullyByUUID() {
         // Arrange
         val savedUserId = UUID.randomUUID()
         val savedUser = User(
