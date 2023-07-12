@@ -11,6 +11,7 @@ import org.mockito.Mockito
 import org.mockito.Mockito.any
 import org.mockito.Mockito.`when`
 import reactor.core.publisher.Mono
+import reactor.kotlin.test.expectError
 import reactor.test.StepVerifier
 import java.util.*
 
@@ -76,9 +77,9 @@ class UserServiceTest {
     @Test
     @DisplayName("Should Throw Exception If UUID Passed Is Invalid")
     fun shouldThrowExceptionIfUUIDPassedIsInvalid() {
-        // Arrange, Act & Assert
-        assertThrows<IllegalArgumentException> {
-            serviceUnderTest.getUserByUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"))
-        }
+        val result = serviceUnderTest.getUserByUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+        StepVerifier.create(result)
+            .expectError<RuntimeException>()
+            .verify()
     }
 }

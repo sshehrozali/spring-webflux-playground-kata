@@ -11,6 +11,8 @@ import java.util.UUID
 class UserService(
     private val userRepository: UserRepository
 ) {
+    private val falseUUID: UUID = UUID.fromString("00000000-0000-0000-0000-000000000000")
+
     fun getAllUsers(): List<UserDTO> {
         return userRepository
             .findAll()
@@ -22,6 +24,10 @@ class UserService(
     fun getUserByUUID(userId: UUID): Mono<UserDTO> {
         return Mono.just(userId)
             .map {
+                if (userId.equals(falseUUID)) {
+                    throw RuntimeException("False UUID detected")
+                }
+
                 val user = userRepository.findByUserId(userId)
                 if (user.isEmpty) {
                     throw RuntimeException("User not found by UUID")
@@ -29,9 +35,9 @@ class UserService(
 
                 UserDTO(user.get().userName, user.get().phoneNumber)
             }
-            .onErrorResume(RuntimeException::class.java) {
-                Mono.empty()
-            }
+//            .onErrorResume(RuntimeException::class.java) {
+//                Mono.empty()
+//            }
 
 
 //        if (userId.equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
