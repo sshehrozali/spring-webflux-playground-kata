@@ -19,21 +19,35 @@ class UserService(
     }
 
     fun getUserByUUID(userId: UUID): Mono<UserDTO> {
-        if (userId.equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
-            throw IllegalArgumentException("Invalid UUID passed")
-        }
+        return Mono.just(userId)
+            .map {
+                val user = userRepository.findByUserId(userId)
+                if (user.isEmpty) {
+                    throw IllegalAccessException("User not found by UUID")
+                }
 
-        val user = userRepository.findByUserId(userId)
+                UserDTO(user.get().userName, user.get().phoneNumber)
+            }
+            .onErrorResume(IllegalAccessException::class.java) {
+                Mono.empty()
+            }
 
-        if (user.isEmpty) {
-            throw IllegalAccessError("User not found by UUID")
-        }
 
-        return Mono.just(
-            UserDTO(
-                user.get().userName,
-                user.get().phoneNumber
-            )
-        )
+//        if (userId.equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
+//            throw IllegalArgumentException("Invalid UUID passed")
+//        }
+//
+//        val user = userRepository.findByUserId(userId)
+//
+//        if (user.isEmpty) {
+//            throw IllegalAccessError("User not found by UUID")
+//        }
+//
+//        return Mono.just(
+//            UserDTO(
+//                user.get().userName,
+//                user.get().phoneNumber
+//            )
+//        )
     }
 }
