@@ -55,12 +55,11 @@ class UserServiceTest {
             3352669779
         )
         every { userRepository.findByUserId(any()) } returns Optional.of(savedUser)
-        val expected = UserDTO("Shehroz", 3352669779)
+        val expected = UserDTO(savedUser.userName, savedUser.phoneNumber)
 
-        val actual = serviceUnderTest.getUserByUUID(savedUserId)
-
-        StepVerifier.create(actual)
-            .consumeNextWith { assertThat(it).isEqualTo(expected) }
+        val result = serviceUnderTest.getUserByUUID(savedUserId)
+        StepVerifier.create(result)
+            .expectNext(expected)
             .verifyComplete()
     }
 
