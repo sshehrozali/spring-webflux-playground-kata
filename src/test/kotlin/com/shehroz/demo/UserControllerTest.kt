@@ -41,7 +41,7 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
 
     @Test
     @DisplayName("Should Get A User By UUID")
-    fun shouldGetUserByUUID() {
+    fun shouldGetAUserByUUID() {
         // Arrange
         val savedUserId = UUID.randomUUID()
         val expected = Mono.just(
