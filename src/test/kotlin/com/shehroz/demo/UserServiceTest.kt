@@ -78,7 +78,7 @@ class UserServiceTest {
         every { userRepository.findByUserId(savedUserId) } returns Optional.empty()
 
         // Act & Assert
-        assertThrows<IllegalAccessException> { serviceUnderTest.getUserByUUID(savedUserId) }
+        assertThrows<RuntimeException> { serviceUnderTest.getUserByUUID(savedUserId) }
     }
 
     @Test

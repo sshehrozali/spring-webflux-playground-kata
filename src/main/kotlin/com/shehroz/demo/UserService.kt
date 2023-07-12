@@ -3,6 +3,7 @@ package com.shehroz.demo
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import java.lang.IllegalArgumentException
+import java.lang.RuntimeException
 import java.util.Optional
 import java.util.UUID
 
@@ -23,12 +24,12 @@ class UserService(
             .map {
                 val user = userRepository.findByUserId(userId)
                 if (user.isEmpty) {
-                    throw IllegalAccessException("User not found by UUID")
+                    throw RuntimeException("User not found by UUID")
                 }
 
                 UserDTO(user.get().userName, user.get().phoneNumber)
             }
-            .onErrorResume(IllegalAccessException::class.java) {
+            .onErrorResume(RuntimeException::class.java) {
                 Mono.empty()
             }
 
