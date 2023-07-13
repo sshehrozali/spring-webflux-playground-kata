@@ -42,23 +42,19 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
     @Test
     @DisplayName("Should Get A User By UUID")
     fun shouldGetAUserByUUID() {
-        // Arrange
         val savedUserId = UUID.randomUUID()
-        val expected = Mono.just(
-            UserDTO(
-                "Shehroz",
-                3352669779
-            )
+        val expected = UserDTO(
+            "Shehroz",
+            3352669779
         )
-        `when`(userService.getUserByUUID(savedUserId)).thenReturn(expected)
+        `when`(userService.getUserByUUID(savedUserId)).thenReturn(Mono.just(expected))
 
-        // Act & Assert
         webTestClient
             .get()
             .uri("/api/v1/users/{userId}", savedUserId)
             .exchange()
             .expectStatus().isOk()
-            .expectBody<Mono<UserDTO>>()
+            .expectBody<UserDTO>()
             .isEqualTo(expected)
         verify(userService, Mockito.times(1))
             .getUserByUUID(userId = savedUserId)
