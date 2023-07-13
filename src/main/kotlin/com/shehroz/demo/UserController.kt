@@ -1,5 +1,6 @@
 package com.shehroz.demo
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -25,9 +26,14 @@ class UserController(
 
     @GetMapping("/users/{userId}")
     fun getUserByUUID(@PathVariable userId: UUID): Mono<ResponseEntity<UserDTO>> {
-        return Mono
-            .just(userId)
-            .flatMap { userService.getUserByUUID(userId) }
+        return userService.getUserByUUID(userId)
             .map { ResponseEntity.ok().body(it) }
+            .onErrorResume { error ->
+                val status = when (error) {
+                    is RuntimeException -> HttpStatus.BAD_REQUEST
+                    else -> HttpStatus.BAD_REQUEST
+                }
+                Mono.just(ResponseEntity.status(status).build())
+            }
     }
 }
