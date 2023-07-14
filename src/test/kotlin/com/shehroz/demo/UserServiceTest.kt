@@ -71,7 +71,7 @@ class UserServiceTest {
 
         val result = serviceUnderTest.getUserByUUID(savedUserId)
         StepVerifier.create(result)
-            .expectError<RuntimeException>()
+            .expectError<UserNotFoundException>()
             .verify()
     }
 
@@ -80,7 +80,7 @@ class UserServiceTest {
     fun shouldThrowExceptionIfUUIDPassedIsInvalid() {
         val result = serviceUnderTest.getUserByUUID(UUID.fromString("00000000-0000-0000-0000-000000000000"))
         StepVerifier.create(result)
-            .expectError<RuntimeException>()
+            .expectError<InvalidUUIDException>()
             .verify()
     }
 }

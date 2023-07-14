@@ -60,9 +60,24 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
     }
 
     @Test
+    fun `should return 404 not found if user doesn't exist by UUID`() {
+        val userId = UUID.randomUUID()
+        `when`(userService.getUserByUUID(userId)).thenReturn(Mono.error(UserNotFoundException()))
+
+        webTestClient
+            .get()
+            .uri("/api/v1/users/{userId}", userId)
+            .exchange()
+            .expectStatus().isNotFound
+            .expectBody<Void>()
+        verify(userService, Mockito.times(1))
+            .getUserByUUID(userId =  userId)
+    }
+
+    @Test
     fun `should throw exception if UUID passed for getting a user is invalid`() {
         val userId = UUID.fromString("00000000-0000-0000-0000-000000000000")
-        `when`(userService.getUserByUUID(userId)).thenReturn(Mono.error(RuntimeException()))
+        `when`(userService.getUserByUUID(userId)).thenReturn(Mono.error(InvalidUUIDException()))
 
         webTestClient
             .get()
