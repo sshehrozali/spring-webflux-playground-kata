@@ -59,4 +59,19 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
         verify(userService, Mockito.times(1))
             .getUserByUUID(userId = savedUserId)
     }
+
+    @Test
+    fun `should throw exception if UUID passed for getting a user is invalid`() {
+        val userId = UUID.fromString("00000000-0000-0000-0000-000000000000")
+        `when`(userService.getUserByUUID(userId)).thenReturn(Mono.error(RuntimeException()))
+
+        webTestClient
+            .get()
+            .uri("/api/v1/users/{userId}", userId)
+            .exchange()
+            .expectStatus().isBadRequest
+            .expectBody<Void>()
+        verify(userService, Mockito.times(1))
+            .getUserByUUID(userId = userId)
+    }
 }
