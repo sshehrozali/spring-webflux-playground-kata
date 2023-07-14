@@ -25,12 +25,12 @@ class UserService(
         return Mono.just(userId)
             .map {
                 if (userId.equals(falseUUID)) {
-                    throw RuntimeException("False UUID detected")
+                    throw InvalidUUIDException()
                 }
 
                 val user = userRepository.findByUserId(userId)
                 if (user.isEmpty) {
-                    throw RuntimeException("User not found by UUID")
+                    throw UserNotFoundException()
                 }
 
                 UserDTO(user.get().userName, user.get().phoneNumber)
