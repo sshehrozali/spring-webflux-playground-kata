@@ -40,8 +40,7 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
     }
 
     @Test
-    @DisplayName("Should Get A User By UUID")
-    fun shouldGetAUserByUUID() {
+    fun `should get a user by valid UUID if user exists`() {
         val savedUserId = UUID.randomUUID()
         val expected = UserDTO(
             "Shehroz",
