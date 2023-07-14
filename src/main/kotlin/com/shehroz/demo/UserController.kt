@@ -30,8 +30,9 @@ class UserController(
             .map { ResponseEntity.ok().body(it) }
             .onErrorResume { error ->
                 val status = when (error) {
-                    is RuntimeException -> HttpStatus.BAD_REQUEST
-                    else -> HttpStatus.BAD_REQUEST
+                    is UserNotFoundException -> HttpStatus.NOT_FOUND
+                    is InvalidUUIDException -> HttpStatus.BAD_REQUEST
+                    else -> HttpStatus.INTERNAL_SERVER_ERROR
                 }
                 Mono.just(ResponseEntity.status(status).build())
             }
