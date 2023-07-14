@@ -1,4 +1,4 @@
 package com.shehroz.demo
 
-class UserNotFoundException: RuntimeException() {
+class UserNotFoundException : RuntimeException() {
 }
