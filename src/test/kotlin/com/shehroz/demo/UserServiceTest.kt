@@ -40,8 +40,10 @@ class UserServiceTest {
             )
         )
 
-        val actual = serviceUnderTest.getAllUsers()
-        assertThat(actual).isEqualTo(expected)
+        val result = serviceUnderTest.getAllUsers()
+        StepVerifier.create(result)
+            .expectNext(expected)
+            .verifyComplete()
     }
 
     @Test
