@@ -13,12 +13,14 @@ class UserService(
 ) {
     private val falseUUID: UUID = UUID.fromString("00000000-0000-0000-0000-000000000000")
 
-    fun getAllUsers(): List<UserDTO> {
-        return userRepository
-            .findAll()
-            .stream()
-            .map { it -> UserDTO(it.userName, it.phoneNumber) }
-            .toList()
+    fun getAllUsers(): Mono<List<UserDTO>> {
+        return Mono.fromCallable {
+            userRepository.findAll()
+                .map { user ->
+                    UserDTO(user.userName, user.phoneNumber)
+                }
+                .toList()
+        }
     }
 
     fun getUserByUUID(userId: UUID): Mono<UserDTO> {
