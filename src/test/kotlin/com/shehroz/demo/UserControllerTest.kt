@@ -26,7 +26,7 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             UserDTO("shehroz.ali", 3352669779),
             UserDTO("saad.hashim", 3022194551),
         )
-        `when`(userService.getAllUsers()).thenReturn(expected)
+        `when`(userService.getAllUsers()).thenReturn(Mono.just(expected))
 
         // Act & Assert
         webTestClient
