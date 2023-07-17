@@ -16,12 +16,8 @@ class UserController(
 ) {
     @GetMapping("/users")
     fun getAllUsers(): Mono<ResponseEntity<List<UserDTO>>> {
-        val allUsers = userService.getAllUsers()
-        return Mono.just(
-            ResponseEntity
-                .ok()
-                .body(allUsers)
-        )
+        return userService.getAllUsers()
+            .map { ResponseEntity.ok().body(it) }
     }
 
     @GetMapping("/users/{userId}")
