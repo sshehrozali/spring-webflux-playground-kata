@@ -21,8 +21,7 @@ class UserServiceTest {
     private val serviceUnderTest = UserService(userRepository)
 
     @Test
-    @DisplayName("Should Get All Users Successfully")
-    fun shouldGetAllUsersSuccessfully() {
+    fun `should get all users successfully`() {
         val savedUsers = mutableListOf<User>(
             User(
                 UUID.randomUUID(),

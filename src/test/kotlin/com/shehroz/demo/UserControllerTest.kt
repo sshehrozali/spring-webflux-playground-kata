@@ -19,8 +19,7 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
     lateinit var userService: UserService
 
     @Test
-    @DisplayName("Should Get All Users")
-    fun shouldGetAllUsers() {
+    fun `should return 200 if all users were fetched successfully`() {
         // Arrange
         val expected = mutableListOf<UserDTO>(
             UserDTO("shehroz.ali", 3352669779),
