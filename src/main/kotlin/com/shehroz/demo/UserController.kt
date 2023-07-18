@@ -18,6 +18,13 @@ class UserController(
     fun getAllUsers(): Mono<ResponseEntity<List<UserDTO>>> {
         return userService.getAllUsers()
             .map { ResponseEntity.ok().body(it) }
+            .onErrorResume { error ->
+                val status = when (error) {
+                    is RuntimeException -> HttpStatus.INTERNAL_SERVER_ERROR
+                    else -> HttpStatus.INTERNAL_SERVER_ERROR
+                }
+                Mono.just(ResponseEntity.status(status).build())
+            }
     }
 
     @GetMapping("/users/{userId}")

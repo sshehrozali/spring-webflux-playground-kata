@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 import reactor.core.publisher.Mono
+import reactor.test.StepVerifier
 import java.util.UUID
 
 @WebFluxTest(UserController::class)
@@ -35,6 +36,17 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .expectStatus().isOk()
             .expectBody<List<UserDTO>>()
             .isEqualTo(expected)
+        verify(userService, Mockito.times(1)).getAllUsers()
+    }
+
+    @Test
+    fun `should return HTTP 500 if something goes wrong`() {
+        `when`(userService.getAllUsers()).thenThrow(RuntimeException())
+        webTestClient
+            .get()
+            .uri("/api/v1/users")
+            .exchange()
+            .expectStatus().is5xxServerError
         verify(userService, Mockito.times(1)).getAllUsers()
     }
 
@@ -70,7 +82,7 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .expectStatus().isNotFound
             .expectBody<Void>()
         verify(userService, Mockito.times(1))
-            .getUserByUUID(userId =  userId)
+            .getUserByUUID(userId = userId)
     }
 
     @Test
