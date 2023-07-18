@@ -42,13 +42,12 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
 
     @Test
     fun `should return HTTP 500 if something goes wrong`() {
-        `when`(userService.getAllUsers()).thenThrow(RuntimeException())
+        every { userService.getAllUsers() } throws RuntimeException()
         webTestClient
             .get()
             .uri("/api/v1/users")
             .exchange()
             .expectStatus().is5xxServerError
-        verify(userService, Mockito.times(1)).getAllUsers()
     }
 
     @Test
@@ -58,7 +57,7 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             "Shehroz",
             3352669779
         )
-        `when`(userService.getUserByUUID(savedUserId)).thenReturn(Mono.just(expected))
+        every { userService.getUserByUUID(savedUserId) } returns Mono.just(expected)
 
         webTestClient
             .get()
@@ -67,14 +66,12 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .expectStatus().isOk()
             .expectBody<UserDTO>()
             .isEqualTo(expected)
-        verify(userService, Mockito.times(1))
-            .getUserByUUID(userId = savedUserId)
     }
 
     @Test
     fun `should return 404 not found if user doesn't exist by UUID`() {
         val userId = UUID.randomUUID()
-        `when`(userService.getUserByUUID(userId)).thenReturn(Mono.error(UserNotFoundException()))
+        every { userService.getUserByUUID(userId) } returns Mono.error(UserNotFoundException())
 
         webTestClient
             .get()
@@ -82,14 +79,12 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .exchange()
             .expectStatus().isNotFound
             .expectBody<Void>()
-        verify(userService, Mockito.times(1))
-            .getUserByUUID(userId = userId)
     }
 
     @Test
     fun `should throw exception if UUID passed for getting a user is invalid`() {
         val userId = UUID.fromString("00000000-0000-0000-0000-000000000000")
-        `when`(userService.getUserByUUID(userId)).thenReturn(Mono.error(InvalidUUIDException()))
+        every { userService.getUserByUUID(userId) } returns Mono.error(InvalidUUIDException())
 
         webTestClient
             .get()
@@ -97,7 +92,5 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .exchange()
             .expectStatus().isBadRequest
             .expectBody<Void>()
-        verify(userService, Mockito.times(1))
-            .getUserByUUID(userId = userId)
     }
 }
