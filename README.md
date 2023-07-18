@@ -1,6 +1,6 @@
 This is a sample Kotlin application that is non-blocking in nature (pub-sub). It uses:
 
-- Spring Boot
+- Spring Boot 3.1.0
 - Spring WebFlux
 - Reactor
 - Reactor Kotlin extensions
@@ -12,3 +12,4 @@ This is a sample Kotlin application that is non-blocking in nature (pub-sub). It
 - Netty
 - Gradle
 - SpringMockk
+- H2 Database
