@@ -42,7 +42,7 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
 
     @Test
     fun `should return HTTP 500 if something goes wrong`() {
-        every { userService.getAllUsers() } throws RuntimeException()
+        every { userService.getAllUsers() } returns Mono.error(RuntimeException())
         webTestClient
             .get()
             .uri("/api/v1/users")
