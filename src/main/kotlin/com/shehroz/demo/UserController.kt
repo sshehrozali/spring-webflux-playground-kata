@@ -35,6 +35,7 @@ class UserController(
                 val status = when (error) {
                     is UserNotFoundException -> HttpStatus.NOT_FOUND
                     is InvalidUUIDException -> HttpStatus.BAD_REQUEST
+                    is RuntimeException -> HttpStatus.INTERNAL_SERVER_ERROR
                     else -> HttpStatus.INTERNAL_SERVER_ERROR
                 }
                 Mono.just(ResponseEntity.status(status).build())
