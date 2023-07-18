@@ -4,6 +4,7 @@ import com.shehroz.demo.dto.UserDTO
 import com.shehroz.demo.repository.UserRepository
 import com.shehroz.demo.exception.InvalidUUIDException
 import com.shehroz.demo.exception.UserNotFoundException
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import java.util.UUID
@@ -12,6 +13,8 @@ import java.util.UUID
 class UserService(
     private val userRepository: UserRepository
 ) {
+    val logger = LoggerFactory.getLogger(this::class.java)
+
     private val falseUUID: UUID = UUID.fromString("00000000-0000-0000-0000-000000000000")
 
     fun getAllUsers(): Mono<List<UserDTO>> {
