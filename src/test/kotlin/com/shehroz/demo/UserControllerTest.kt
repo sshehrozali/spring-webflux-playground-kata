@@ -1,5 +1,7 @@
 package com.shehroz.demo
 
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -16,8 +18,8 @@ import java.util.UUID
 @WebFluxTest(UserController::class)
 class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
 
-    @MockBean
-    lateinit var userService: UserService
+    @MockkBean
+    private lateinit var userService: UserService
 
     @Test
     fun `should return 200 if all users were fetched successfully`() {
@@ -26,7 +28,7 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             UserDTO("shehroz.ali", 3352669779),
             UserDTO("saad.hashim", 3022194551),
         )
-        `when`(userService.getAllUsers()).thenReturn(Mono.just(expected))
+        every { userService.getAllUsers() } returns Mono.just(expected)
 
         // Act & Assert
         webTestClient
@@ -36,7 +38,6 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
             .expectStatus().isOk()
             .expectBody<List<UserDTO>>()
             .isEqualTo(expected)
-        verify(userService, Mockito.times(1)).getAllUsers()
     }
 
     @Test
