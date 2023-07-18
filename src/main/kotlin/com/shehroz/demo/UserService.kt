@@ -24,18 +24,17 @@ class UserService(
     }
 
     fun getUserByUUID(userId: UUID): Mono<UserDTO> {
-        return Mono.just(userId)
-            .map {
-                if (userId.equals(falseUUID)) {
-                    throw InvalidUUIDException()
-                }
-
-                val user = userRepository.findByUserId(userId)
-                if (user.isEmpty) {
-                    throw UserNotFoundException()
-                }
-
-                UserDTO(user.get().userName, user.get().phoneNumber)
+        return Mono.fromCallable {
+            if (userId.equals(falseUUID)) {
+                throw InvalidUUIDException()
             }
+
+            val user = userRepository.findByUserId(userId)
+            if (user.isEmpty) {
+                throw UserNotFoundException()
+            }
+
+            UserDTO(user.get().userName, user.get().phoneNumber)
+        }
     }
 }
