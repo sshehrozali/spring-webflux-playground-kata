@@ -1,10 +1,11 @@
-package com.shehroz.demo
+package com.shehroz.demo.service
 
+import com.shehroz.demo.dto.UserDTO
+import com.shehroz.demo.repository.UserRepository
+import com.shehroz.demo.exception.InvalidUUIDException
+import com.shehroz.demo.exception.UserNotFoundException
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
-import java.lang.IllegalArgumentException
-import java.lang.RuntimeException
-import java.util.Optional
 import java.util.UUID
 
 @Service

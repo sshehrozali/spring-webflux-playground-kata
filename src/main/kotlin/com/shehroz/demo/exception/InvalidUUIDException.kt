@@ -1,4 +1,4 @@
-package com.shehroz.demo
+package com.shehroz.demo.exception
 
 class InvalidUUIDException : RuntimeException() {
 }

@@ -1,5 +1,6 @@
-package com.shehroz.demo
+package com.shehroz.demo.repository
 
+import com.shehroz.demo.entity.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.Optional

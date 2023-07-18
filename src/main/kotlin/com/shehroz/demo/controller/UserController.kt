@@ -1,5 +1,9 @@
-package com.shehroz.demo
+package com.shehroz.demo.controller
 
+import com.shehroz.demo.exception.InvalidUUIDException
+import com.shehroz.demo.dto.UserDTO
+import com.shehroz.demo.exception.UserNotFoundException
+import com.shehroz.demo.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

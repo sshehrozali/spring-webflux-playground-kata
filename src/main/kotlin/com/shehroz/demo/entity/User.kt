@@ -1,4 +1,4 @@
-package com.shehroz.demo
+package com.shehroz.demo.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
