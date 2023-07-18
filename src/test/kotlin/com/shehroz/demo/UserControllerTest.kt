@@ -23,14 +23,12 @@ class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
 
     @Test
     fun `should return 200 if all users were fetched successfully`() {
-        // Arrange
         val expected = mutableListOf<UserDTO>(
             UserDTO("shehroz.ali", 3352669779),
             UserDTO("saad.hashim", 3022194551),
         )
         every { userService.getAllUsers() } returns Mono.just(expected)
 
-        // Act & Assert
         webTestClient
             .get()
             .uri("/api/v1/users")
