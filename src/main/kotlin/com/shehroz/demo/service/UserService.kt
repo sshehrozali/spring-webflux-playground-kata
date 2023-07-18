@@ -18,6 +18,7 @@ class UserService(
     private val falseUUID: UUID = UUID.fromString("00000000-0000-0000-0000-000000000000")
 
     fun getAllUsers(): Mono<List<UserDTO>> {
+        logger.debug("Fetching all users...")
         return Mono.fromCallable {
             userRepository.findAll()
                 .map { user ->
@@ -30,11 +31,13 @@ class UserService(
     fun getUserByUUID(userId: UUID): Mono<UserDTO> {
         return Mono.fromCallable {
             if (userId.equals(falseUUID)) {
+                logger.error("False UUID detected while fetching a User")
                 throw InvalidUUIDException()
             }
 
             val user = userRepository.findByUserId(userId)
             if (user.isEmpty) {
+                logger.error("No User found by matching UUID")
                 throw UserNotFoundException()
             }
 
