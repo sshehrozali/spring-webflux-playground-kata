@@ -11,3 +11,4 @@ This is a sample Kotlin application that is non-blocking in nature (pub-sub). It
 - AssertJ
 - Netty
 - Gradle
+- SpringMockk
