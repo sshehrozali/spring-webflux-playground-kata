@@ -14,7 +14,7 @@ Reactor Kotlin is an advanced asynchronous programming library designed for Kotl
 - Functional Programming
 
 ##### Dependencies used:
-- Spring Boot 3.1.0
+- Spring Boot 3.1
 - Spring WebFlux
 - Reactor Core
 - Reactor Kotlin extensions
