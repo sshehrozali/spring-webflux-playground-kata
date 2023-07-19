@@ -6,7 +6,7 @@ By making the nature non-blocking, application can handle multiple concurrent re
 #### Reactor Kotlin
 Reactor Kotlin is an advanced asynchronous programming library designed for Kotlin, built on top of Reactor Core, which is a reactive programming library for the JVM. It enables developers to write non-blocking, event-driven applications that can handle concurrent operations efficiently.
 
-Some features of **Reactor Kotlin**:
+**Reactor Kotlin** supports:
 - Reactive Streams (Mono)
 - Asynchronous operations
 - Error Handling
