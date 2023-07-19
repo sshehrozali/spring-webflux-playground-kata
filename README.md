@@ -26,7 +26,7 @@ It supports:
 - Mockito
 - MockK
 - Spring JPA
-- AssertJ
+- Reactor Test
 - Netty
 - Gradle
 - SpringMockk
